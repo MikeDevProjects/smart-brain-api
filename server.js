@@ -4,29 +4,38 @@ const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
 
+
 dotenv.config();
 const db = knex({
   client: 'pg',
-  connection: {
-    host : '127.0.0.1',
-    user : process.env.DB_USER,
-    password : process.env.DB_PASSWORD,
-    database : process.env.DB_NAME
-  }
+  connection: process.env.POSTGRES_URI
 });
 
 const app = express();
 
-app.use(cors())
+const whiteList = ['http://localhost:3000']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whiteList.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+app.use(morgan('combined'));
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-app.get('/', (req, res)=> { res.send(db.users) })
+app.get('/', (req, res)=> { res.send("ITS WORKING") })
 app.post('/signin', signin.handleSignin(db, bcrypt))
 app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
 app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db)})
@@ -36,3 +45,4 @@ app.post('/imageurl', (req, res) => { image.handleApiCall(req, res)})
 app.listen(process.env.PORT, ()=> {
   console.log(`app is running on port ${process.env.PORT}`);
 })
+
