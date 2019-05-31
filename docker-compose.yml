@@ -11,6 +11,8 @@ services:
       - "3001:3001"
     environment:
       POSTGRES_URI: postgres://sally:secretpass@postgres:5432/smart-brain
+      REDIS_URI: redis://redis:6379
+      JWT_SECRET: JWT-SECRET
     # volumes:
     #   - ./:/usr/src/smart-brain-api
 
@@ -25,3 +27,10 @@ services:
       POSTGRES_HOST: postgres
     ports:
       - "5432:5432"
+
+  # Redis
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
