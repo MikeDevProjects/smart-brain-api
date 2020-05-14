@@ -17,8 +17,11 @@ Created to play around with:
 ## How to use
 
 1. Clone this repo
-2. Run `npm install`
-3. Run `npm start`
-4. You must add your own API key in the `controllers/image.js` file to connect to Clarifai API.
+2. Add you Clarifai API key to the `docker-compose.yml` file (services --> smart-brain-api --> environment --> API_KEY)
+3. Run command: `docker-compose up --build`
 
-You can grab Clarifai API key [here](https://www.clarifai.com/)
+**Don't have Clarifai API key?** You can grab one for free [here](https://www.clarifai.com/) 😉.
+
+## DEMO
+
+You can also watch the demo [here](https://youtu.be/oN9gBKOvhVQ).

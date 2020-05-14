@@ -13,6 +13,8 @@ services:
       POSTGRES_URI: postgres://sally:secretpass@postgres:5432/smart-brain
       REDIS_URI: redis://redis:6379
       JWT_SECRET: JWT-SECRET
+      API_KEY: <YOUR_API_KEY>
+
     # volumes:
     #   - ./:/usr/src/smart-brain-api
 
